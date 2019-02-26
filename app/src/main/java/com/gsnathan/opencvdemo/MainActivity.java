@@ -33,6 +33,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
@@ -151,7 +152,9 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 // Draw rectangle around detected object.
                 Imgproc.rectangle(frame, new Point(left, top), new Point(right, bottom),
                         new Scalar(0, 255, 0));
-                String label = classNames[classId] + ": " + confidence;
+
+                DecimalFormat f = new DecimalFormat("##.00");
+                String label = classNames[classId] + ": " + f.format(confidence * 100) + "%";
                 int[] baseLine = new int[1];
                 Size labelSize = Imgproc.getTextSize(label, Core.FONT_HERSHEY_SIMPLEX, 1, 1, baseLine);
                 // Draw background for label.
