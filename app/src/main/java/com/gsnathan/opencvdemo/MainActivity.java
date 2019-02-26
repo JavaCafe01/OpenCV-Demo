@@ -5,11 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.os.Build;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -76,6 +80,15 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (Build.VERSION.SDK_INT < 16) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        } else {
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
+
         onFirstInstall();
 
         // Set up camera listener.
@@ -84,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         mOpenCvCameraView.enableFpsMeter();
         mOpenCvCameraView.setCvCameraViewListener(this);
     }
+
     private void onFirstInstall() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isFirstRun = prefs.getBoolean("FIRSTINSTALL", true);
@@ -143,14 +157,14 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                         new Scalar(0, 255, 0));
                 String label = classNames[classId] + ": " + confidence;
                 int[] baseLine = new int[1];
-                Size labelSize = Imgproc.getTextSize(label, Core.FONT_HERSHEY_SIMPLEX, 1.5, 1, baseLine);
+                Size labelSize = Imgproc.getTextSize(label, Core.FONT_HERSHEY_SIMPLEX, 1, 1, baseLine);
                 // Draw background for label.
                 Imgproc.rectangle(frame, new Point(left, top - labelSize.height),
                         new Point(left + labelSize.width, top + baseLine[0]),
                         new Scalar(0, 255, 0), Core.FILLED);
                 // Write class name and confidence.
                 Imgproc.putText(frame, label, new Point(left, top),
-                        Core.FONT_HERSHEY_SIMPLEX, 0.5, new Scalar(0, 0, 0));
+                        Core.FONT_HERSHEY_SIMPLEX, 1, new Scalar(0, 0, 0));
             }
         }
         return frame;
