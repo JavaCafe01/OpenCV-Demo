@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -78,16 +79,11 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        if (Build.VERSION.SDK_INT < 16) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        } else {
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-        }
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_main);
 
         onFirstInstall();
 
