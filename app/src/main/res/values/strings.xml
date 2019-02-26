@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Vis Processor</string>
+    <string name="title_intro">Vis Processor</string>
+    <string name="description__intro">In order to run tthe app, we need to access your camera.</string>
+    <string name="intro">Intro</string>
+    <string name="title_orient">Orientation</string>
+    <string name="description_orient">The camera is always in landscape, so after continuing please rotate your phone.</string>
+</resources>
