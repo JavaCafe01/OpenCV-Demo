@@ -17,7 +17,9 @@ public class MainIntroActivity extends AppIntro {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+
+        if (getSupportActionBar() != null)
+            getSupportActionBar().hide();
 
         SliderPage first = new SliderPage();
         first.setTitle(getString(R.string.title_intro));

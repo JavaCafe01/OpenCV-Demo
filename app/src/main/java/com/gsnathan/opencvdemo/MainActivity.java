@@ -31,7 +31,7 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
-    private static final String TAG = "OpenCVDemo";
+    private static final String TAG = "Vis-Process";
     private static final String[] classNames = {"background",
             "plane", "bicycle", "bird", "boat",
             "bottle", "bus", "car", "cat", "chair",
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                         new Scalar(0, 255, 0));
                 String label = classNames[classId] + ": " + confidence;
                 int[] baseLine = new int[1];
-                Size labelSize = Imgproc.getTextSize(label, Core.FONT_HERSHEY_SIMPLEX, 0.5, 1, baseLine);
+                Size labelSize = Imgproc.getTextSize(label, Core.FONT_HERSHEY_SIMPLEX, 1.5, 1, baseLine);
                 // Draw background for label.
                 Imgproc.rectangle(frame, new Point(left, top - labelSize.height),
                         new Point(left + labelSize.width, top + baseLine[0]),
